@@ -2,6 +2,7 @@ import { Input } from './components/Input';
 import { Checkbox } from './components/Checkbox';
 import { Button } from './components/Button';
 import { Separator } from './components/Separator';
+import TaskList from './components/TaskList';
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
+        <TaskList>
           <div className="flex flex-row gap-1 items-center">
             <div className="flex p-2 items-center">
               <Checkbox />
@@ -52,7 +53,7 @@ function App() {
             </div>
             <Input placeholder="What would you like to do?" />
           </div>
-        </div>
+        </TaskList>
       </div>
     </div>
   );
