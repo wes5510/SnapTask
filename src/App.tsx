@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Input } from './components/ui/input';
+import { Checkbox } from './components/ui/checkbox';
+import { Button } from './components/ui/button';
+import { Separator } from './components/ui/separator';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="max-w-3xl mx-auto my-16 flex flex-col gap-6">
+      <Input
+        placeholder="Search tasks..."
+        className="text-lg h-12 border rounded-md px-4 py-2 border"
+      />
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-row items-center">
+          <Button variant="link" size="sm">
+            In Progress
+          </Button>
+          <Separator orientation="vertical" />
+          <Button variant="link" size="sm">
+            Done
+          </Button>
+          <Separator orientation="vertical" />
+          <Button variant="link" size="sm">
+            All
+          </Button>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-row gap-1 items-center">
+            <div className="flex p-2 items-center">
+              <Checkbox />
+            </div>
+            <Input placeholder="What would you like to do?" />
+          </div>
+          <div className="flex flex-row gap-1 items-center">
+            <div className="flex p-2 items-center">
+              <Checkbox />
+            </div>
+            <Input placeholder="What would you like to do?" />
+          </div>
+          <div className="flex flex-row gap-1 items-center">
+            <div className="flex p-2 items-center">
+              <Checkbox />
+            </div>
+            <Input placeholder="What would you like to do?" />
+          </div>
+          <div className="flex flex-row gap-1 items-center">
+            <div className="flex p-2 items-center">
+              <Checkbox />
+            </div>
+            <Input placeholder="What would you like to do?" />
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
