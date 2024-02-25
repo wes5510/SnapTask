@@ -34,7 +34,7 @@ export default function TaskItem({
         <div className="flex gap-1.5 flex-wrap">
           <TagItem text="건강" />
           <TagItem text="회사" />
-          <TagItem text="abcajsdkfljaskldfjkl" />
+          <TagItem text="abcajsdkfljaskldfjklabcajsdkfljaskldfjklabcajsdkfljaskldfjklabcajsdkfljaskldfjklabcajsdkfljaskldfjklabcajsdkfljaskldfjklabcajsdkfljaskldfjklabcajsdkfljaskldfjkl" />
         </div>
       </div>
     </div>
