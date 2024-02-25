@@ -13,7 +13,7 @@ function App() {
         <ListController>
           <SearchInput />
           <div className="flex flex-row items-center justify-between">
-            <Button size="sm">Add Task</Button>
+            <Button size="sm">+ Task</Button>
             <Filter />
           </div>
         </ListController>
