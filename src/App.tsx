@@ -1,7 +1,7 @@
-import { Input } from './components/input';
-import { Checkbox } from './components/checkbox';
-import { Button } from './components/button';
-import { Separator } from './components/separator';
+import { Input } from './components/Input';
+import { Checkbox } from './components/Checkbox';
+import { Button } from './components/Button';
+import { Separator } from './components/Separator';
 
 function App() {
   return (
