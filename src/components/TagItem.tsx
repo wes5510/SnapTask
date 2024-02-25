@@ -11,7 +11,7 @@ export default function TagItem({ text }: TagItemProps) {
   return (
     <div className="text-sm max-w-48 flex items-center">
       <div className="text-slate-400">{TAG_PREFIX}</div>
-      <Tooltip open>
+      <Tooltip>
         <TooltipTrigger asChild>
           <span className="truncate">{text}</span>
         </TooltipTrigger>
