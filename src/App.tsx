@@ -1,29 +1,25 @@
-import { Button } from './components/Button';
-import TaskList from './components/TaskList';
-import ListController from './components/ListController';
-import SearchInput from './components/SearchInput';
-import Filter from './components/Filter';
-import TaskItem from './components/TaskItem';
-import { TooltipProvider } from './components/Tooltip';
+import { Button } from './common/component/Button';
+import * as task from './task';
+import * as common from './common';
 
 function App() {
   return (
-    <TooltipProvider>
+    <common.TooltipProvider>
       <div className="max-w-3xl mx-auto my-16 flex flex-col gap-6">
-        <ListController>
-          <SearchInput />
+        <task.ListController>
+          <task.SearchInput />
           <div className="flex flex-row items-center justify-between">
             <Button size="sm">+ Task</Button>
-            <Filter />
+            <task.Filter />
           </div>
-        </ListController>
+        </task.ListController>
 
-        <TaskList>
-          <TaskItem />
-          <TaskItem />
-        </TaskList>
+        <task.List>
+          <task.Item />
+          <task.Item />
+        </task.List>
       </div>
-    </TooltipProvider>
+    </common.TooltipProvider>
   );
 }
 

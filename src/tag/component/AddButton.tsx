@@ -1,24 +1,23 @@
 import { TAG_PREFIX } from '../const';
-import { Button } from './Button';
-import { Input } from './Input';
+import * as common from '../../common';
 import { Popover, PopoverContent, PopoverTrigger } from './Popover';
 
-export default function AddTagButton() {
+export default function AddButton() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="xs">
+        <common.Button variant="outline" size="xs">
           + Tag
-        </Button>
+        </common.Button>
       </PopoverTrigger>
       <PopoverContent className="w-48" align="start">
         <div className="flex flex-row items-center gap-1">
           <span className="text-slate-400">{TAG_PREFIX}</span>
-          <Input
+          <common.Input
             placeholder="Type to add tags"
             className="text-sm h-8 grow basis-0"
           />
-          <Button size="xs">Add</Button>
+          <common.Button size="xs">Add</common.Button>
         </div>
       </PopoverContent>
     </Popover>

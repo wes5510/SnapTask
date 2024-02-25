@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from 'react';
-import { Input } from './Input';
+import * as common from '../../common';
 
 interface SearchInputProps {
   value?: string;
@@ -8,7 +8,7 @@ interface SearchInputProps {
 
 export default function SearchInput({ value, onChange }: SearchInputProps) {
   return (
-    <Input
+    <common.Input
       value={value}
       onChange={onChange}
       placeholder="Search Tasks..."

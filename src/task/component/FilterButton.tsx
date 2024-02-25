@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { Button } from './Button';
+import * as common from '../../common';
 
 interface FilterButtonProps extends PropsWithChildren {
   active?: boolean;
@@ -7,8 +7,8 @@ interface FilterButtonProps extends PropsWithChildren {
 
 export default function FilterButton({ active, children }: FilterButtonProps) {
   return (
-    <Button variant="link" size="sm" active={active}>
+    <common.Button variant="link" size="sm" active={active}>
       {children}
-    </Button>
+    </common.Button>
   );
 }

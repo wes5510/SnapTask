@@ -1,31 +1,30 @@
 import { TAG_PREFIX } from '../const';
-import { Button } from './Button';
-import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
+import * as common from '../../common';
 import TrashIcon from './TrashIcon';
 
-export interface TagItemProps {
+export interface ItemProps {
   text: string;
 }
 
-export default function TagItem({ text }: TagItemProps) {
+export default function Item({ text }: ItemProps) {
   return (
     <div className="text-sm max-w-48 flex items-center">
       <div className="text-slate-400">{TAG_PREFIX}</div>
-      <Tooltip>
-        <TooltipTrigger asChild>
+      <common.Tooltip>
+        <common.TooltipTrigger asChild>
           <span className="truncate">{text}</span>
-        </TooltipTrigger>
-        <TooltipContent
+        </common.TooltipTrigger>
+        <common.TooltipContent
           align="start"
           side="bottom"
           className="flex items-start gap-2 max-w-96"
         >
           <span className="grow basis-0 break-all">{text}</span>
-          <Button size="icon" className="w-6 h-6">
+          <common.Button size="icon" className="w-6 h-6">
             <TrashIcon className="h-4 w-4" />
-          </Button>
-        </TooltipContent>
-      </Tooltip>
+          </common.Button>
+        </common.TooltipContent>
+      </common.Tooltip>
     </div>
   );
 }
