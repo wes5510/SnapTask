@@ -1,11 +1,13 @@
 import { create } from 'zustand';
+import { nanoid } from 'nanoid';
 import { Task } from './type';
 
 type State = {
   tasks: Map<Task['id'], Task>;
+  addNewTask: () => void;
 };
 
-export const useStore = create<State>()(() => ({
+export const useStore = create<State>()((set) => ({
   tasks: new Map([
     [
       'task-1',
@@ -53,4 +55,17 @@ export const useStore = create<State>()(() => ({
       },
     ],
   ]),
+  addNewTask: () =>
+    set((state) => {
+      const newTask = {
+        id: nanoid(),
+        text: '',
+        tagIds: [],
+        completed: false,
+      };
+
+      return {
+        tasks: new Map([[newTask.id, newTask], ...state.tasks]),
+      };
+    }),
 }));

@@ -1,4 +1,3 @@
-import { Button } from './common/component/Button';
 import * as task from './task';
 import * as common from './common';
 
@@ -9,7 +8,7 @@ function App() {
         <task.ListController>
           <task.SearchInput />
           <div className="flex flex-row items-center justify-between">
-            <Button size="sm">+ Task</Button>
+            <task.AddTask />
             <task.Filter />
           </div>
         </task.ListController>
