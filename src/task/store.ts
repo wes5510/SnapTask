@@ -11,6 +11,7 @@ type State = {
   }) => void;
   setText: (params: { id: Task['id']; text: Task['text'] }) => void;
   deleteTask: (id: Task['id']) => void;
+  prependTagId: (params: { id: Task['id']; tagId: string }) => void;
 };
 
 export const useStore = create<State>()((set) => ({
@@ -111,6 +112,21 @@ export const useStore = create<State>()((set) => ({
 
       return {
         tasks: newTasks,
+      };
+    }),
+  prependTagId: ({ id, tagId }) =>
+    set((state) => {
+      const task = state.tasks.get(id);
+
+      if (!task) {
+        return state;
+      }
+
+      return {
+        tasks: new Map(state.tasks).set(task.id, {
+          ...task,
+          tagIds: [tagId, ...task.tagIds],
+        }),
       };
     }),
 }));

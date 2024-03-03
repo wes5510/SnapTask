@@ -1,12 +1,27 @@
 import { TAG_PREFIX } from '../const';
 import * as common from '../../common';
 import { Popover, PopoverContent, PopoverTrigger } from './Popover';
+import { ChangeEventHandler, MouseEventHandler } from 'react';
 
-export default function AddButton() {
+export interface AddButtonProps {
+  open?: boolean;
+  text: string;
+  onClick: MouseEventHandler;
+  onClickSubmit?: MouseEventHandler;
+  onChangeText: ChangeEventHandler<HTMLInputElement>;
+}
+
+export default function AddButton({
+  open,
+  text,
+  onClick,
+  onClickSubmit,
+  onChangeText,
+}: AddButtonProps) {
   return (
-    <Popover>
+    <Popover open={open}>
       <PopoverTrigger asChild>
-        <common.Button variant="outline" size="xs">
+        <common.Button variant="outline" size="xs" onClick={onClick}>
           + Tag
         </common.Button>
       </PopoverTrigger>
@@ -16,8 +31,12 @@ export default function AddButton() {
           <common.Input
             placeholder="Type to add tags"
             className="text-sm h-8 grow basis-0"
+            value={text}
+            onChange={onChangeText}
           />
-          <common.Button size="xs">Add</common.Button>
+          <common.Button size="xs" onClick={onClickSubmit}>
+            Add
+          </common.Button>
         </div>
       </PopoverContent>
     </Popover>

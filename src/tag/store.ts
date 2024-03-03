@@ -3,9 +3,10 @@ import { Tag } from './type';
 
 export type State = {
   tags: Map<Tag['id'], Tag>;
+  addTag: (tag: Tag) => void;
 };
 
-export const useStore = create<State>()(() => ({
+export const useStore = create<State>()((set) => ({
   tags: new Map([
     [
       'tag-1',
@@ -43,4 +44,9 @@ export const useStore = create<State>()(() => ({
       },
     ],
   ]),
+  addTag: (tag) => {
+    set((state) => ({
+      tags: new Map([[tag.id, tag], ...state.tags]),
+    }));
+  },
 }));
