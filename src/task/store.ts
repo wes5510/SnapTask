@@ -10,6 +10,7 @@ type State = {
     completed: Task['completed'];
   }) => void;
   setText: (params: { id: Task['id']; text: Task['text'] }) => void;
+  deleteTask: (id: Task['id']) => void;
 };
 
 export const useStore = create<State>()((set) => ({
@@ -101,6 +102,15 @@ export const useStore = create<State>()((set) => ({
           ...task,
           text,
         }),
+      };
+    }),
+  deleteTask: (id) =>
+    set((state) => {
+      const newTasks = new Map(state.tasks);
+      newTasks.delete(id);
+
+      return {
+        tasks: newTasks,
       };
     }),
 }));

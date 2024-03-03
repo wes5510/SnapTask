@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import Item from '../component/Item';
 import { useStore } from '../store';
 
@@ -10,6 +10,7 @@ export default function TaskItem({ id }: TaskItemProps) {
   const task = useStore((state) => state.tasks.get(id));
   const setCompleted = useStore((state) => state.setCompleted);
   const setText = useStore((state) => state.setText);
+  const deleteTask = useStore((state) => state.deleteTask);
 
   const handleChangeCheck = (checked: boolean | string) => {
     setCompleted({ id, completed: !!checked });
@@ -19,6 +20,12 @@ export default function TaskItem({ id }: TaskItemProps) {
     setText({ id, text: e.target.value });
   };
 
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === 'Backspace' && e.currentTarget.value === '') {
+      deleteTask(id);
+    }
+  };
+
   return task ? (
     <Item
       id={id}
@@ -26,6 +33,7 @@ export default function TaskItem({ id }: TaskItemProps) {
       checked={task.completed}
       onChangeCheck={handleChangeCheck}
       onChangeText={handleChangeText}
+      onKeyDown={handleKeyDown}
     />
   ) : null;
 }
