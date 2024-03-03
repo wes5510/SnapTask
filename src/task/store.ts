@@ -9,6 +9,7 @@ type State = {
     id: Task['id'];
     completed: Task['completed'];
   }) => void;
+  setText: (params: { id: Task['id']; text: Task['text'] }) => void;
 };
 
 export const useStore = create<State>()((set) => ({
@@ -84,6 +85,21 @@ export const useStore = create<State>()((set) => ({
         tasks: new Map(state.tasks).set(task.id, {
           ...task,
           completed,
+        }),
+      };
+    }),
+  setText: ({ id, text }) =>
+    set((state) => {
+      const task = state.tasks.get(id);
+
+      if (!task) {
+        return state;
+      }
+
+      return {
+        tasks: new Map(state.tasks).set(task.id, {
+          ...task,
+          text,
         }),
       };
     }),
