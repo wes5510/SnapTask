@@ -15,8 +15,7 @@ function App() {
         </task.ListController>
 
         <task.List>
-          <task.Item />
-          <task.Item />
+          <task.Tasks />
         </task.List>
       </div>
     </common.TooltipProvider>
