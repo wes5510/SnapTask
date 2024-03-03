@@ -8,7 +8,7 @@ export interface ItemProps {
   id: string;
   text?: string;
   checked?: boolean;
-  onChangeCheck?: ChangeEventHandler<HTMLButtonElement>;
+  onChangeCheck?: (checked: boolean | string) => void;
   onChangeText?: ChangeEventHandler;
 }
 
@@ -22,7 +22,7 @@ export default function Item({
   return (
     <div className="grid grid-rows-[min-content_1fr] grid-cols-[min-content_1fr]">
       <div className="flex p-2 items-center">
-        <Checkbox checked={checked} onChange={onChangeCheck} />
+        <Checkbox checked={checked} onCheckedChange={onChangeCheck} />
       </div>
       <common.Input
         placeholder="What would you like to do?"

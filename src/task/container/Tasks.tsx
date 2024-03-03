@@ -1,10 +1,10 @@
-import Item from '../component/Item';
+import { memo } from 'react';
 import { useStore } from '../store';
+import TaskItem from './TaskItem';
+
+const MTaskItem = memo(TaskItem);
 
 export default function Tasks() {
-  const tasks = useStore((state) => [...state.tasks.values()]);
-
-  return tasks.map(({ id, text, completed }) => (
-    <Item key={id} id={id} text={text} checked={completed} />
-  ));
+  const taskIds = useStore((state) => [...state.tasks.keys()]);
+  return taskIds.map((id) => <MTaskItem key={id} id={id} />);
 }

@@ -5,6 +5,10 @@ import { Task } from './type';
 type State = {
   tasks: Map<Task['id'], Task>;
   addNewTask: () => void;
+  setCompleted: (params: {
+    id: Task['id'];
+    completed: Task['completed'];
+  }) => void;
 };
 
 export const useStore = create<State>()((set) => ({
@@ -66,6 +70,21 @@ export const useStore = create<State>()((set) => ({
 
       return {
         tasks: new Map([[newTask.id, newTask], ...state.tasks]),
+      };
+    }),
+  setCompleted: ({ id, completed }) =>
+    set((state) => {
+      const task = state.tasks.get(id);
+
+      if (!task) {
+        return state;
+      }
+
+      return {
+        tasks: new Map(state.tasks).set(task.id, {
+          ...task,
+          completed,
+        }),
       };
     }),
 }));
