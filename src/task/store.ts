@@ -12,6 +12,7 @@ type State = {
   setText: (params: { id: Task['id']; text: Task['text'] }) => void;
   deleteTask: (id: Task['id']) => void;
   prependTagId: (params: { id: Task['id']; tagId: string }) => void;
+  deleteTagId: (params: { id: Task['id']; tagId: string }) => void;
 };
 
 export const useStore = create<State>()((set) => ({
@@ -126,6 +127,21 @@ export const useStore = create<State>()((set) => ({
         tasks: new Map(state.tasks).set(task.id, {
           ...task,
           tagIds: [tagId, ...task.tagIds],
+        }),
+      };
+    }),
+  deleteTagId: ({ id, tagId }) =>
+    set((state) => {
+      const task = state.tasks.get(id);
+
+      if (!task) {
+        return state;
+      }
+
+      return {
+        tasks: new Map(state.tasks).set(task.id, {
+          ...task,
+          tagIds: task.tagIds.filter((t) => t !== tagId),
         }),
       };
     }),

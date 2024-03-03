@@ -7,6 +7,13 @@ export interface TagsProps {
 
 export default function Tags({ taskId }: TagsProps) {
   const tagIds = useStore((state) => state.tasks.get(taskId)?.tagIds ?? []);
+  const deleteTagId = useStore((state) => state.deleteTagId);
 
-  return tagIds.map((tagId) => <tag.TagItem key={tagId} id={tagId} />);
+  const handleDelete = (tagId: string) => {
+    deleteTagId({ id: taskId, tagId });
+  };
+
+  return tagIds.map((tagId) => (
+    <tag.TagItem key={tagId} id={tagId} onDelete={handleDelete} />
+  ));
 }
