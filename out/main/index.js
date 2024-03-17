@@ -1,12 +1,28 @@
 import { app, ipcMain, BrowserWindow, shell } from "electron";
-import { join } from "path";
+import path, { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
+import BetterSqlite3 from "better-sqlite3";
 import __cjs_url__ from "node:url";
 import __cjs_path__ from "node:path";
 import __cjs_mod__ from "node:module";
 const __filename = __cjs_url__.fileURLToPath(import.meta.url);
 const __dirname = __cjs_path__.dirname(__filename);
 const require2 = __cjs_mod__.createRequire(import.meta.url);
+const dbPath = path.resolve("./demo.db");
+console.log({ dbPath });
+const db = new BetterSqlite3(dbPath);
+db.pragma("journal_mode = WAL");
+const readAllPerson = () => {
+  try {
+    const query = `SELECT * FROM person`;
+    const readQuery = db.prepare(query);
+    const rowList = readQuery.all();
+    return rowList;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -14,7 +30,7 @@ function createWindow() {
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
-      preload: join(__dirname, "../preload/index.js"),
+      preload: join(__dirname, "../preload/index.mjs"),
       sandbox: false
     }
   });
@@ -37,6 +53,9 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
   ipcMain.on("ping", () => console.log("pong"));
+  ipcMain.handle("read:/persons", () => {
+    return readAllPerson();
+  });
   createWindow();
   app.on("activate", function() {
     if (BrowserWindow.getAllWindows().length === 0)
