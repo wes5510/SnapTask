@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: my-app
+productName: SnapTask
 directories:
   buildResources: build
 files:
@@ -14,7 +14,7 @@ extraResources:
 asarUnpack:
   - resources/**
 win:
-  executableName: my-app
+  executableName: SnapTask
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

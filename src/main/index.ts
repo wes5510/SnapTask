@@ -11,8 +11,7 @@ function createWindow(): void {
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
-      preload: join(__dirname, '../preload/index.mjs'),
-      sandbox: false,
+      preload: join(__dirname, '../preload/index.js'),
     },
   });
 
@@ -50,9 +49,7 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'));
-  ipcMain.handle('read:/persons', () => {
-    return readAllPerson();
-  });
+  ipcMain.handle('read:/persons', readAllPerson);
 
   createWindow();
 

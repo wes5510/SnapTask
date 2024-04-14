@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 
 function App() {
   useEffect(() => {
-    window.electron.ipcRenderer.invoke('read:/persons').then((res) => {
-      console.log(res);
+    window.electronAPI.getPersons().then((persons) => {
+      console.log({ persons });
     });
   });
 
