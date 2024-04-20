@@ -42,6 +42,9 @@ const repo = AppDataSource.getRepository(Task);
 const create = ({ id, text, completed }) => {
   repo.save({ id, text, completed });
 };
+const get = () => {
+  return repo.find();
+};
 function createWindow() {
   const mainWindow = new electron.BrowserWindow({
     width: 900,
@@ -75,6 +78,7 @@ electron.app.whenReady().then(async () => {
   electron.ipcMain.handle("create:/tasks", (_e, data) => {
     create(data);
   });
+  electron.ipcMain.handle("get:/tasks", get);
   createWindow();
   electron.app.on("activate", function() {
     if (electron.BrowserWindow.getAllWindows().length === 0)

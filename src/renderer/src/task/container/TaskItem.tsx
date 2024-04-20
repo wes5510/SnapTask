@@ -1,13 +1,25 @@
 import { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import Item from '../component/Item';
 import { useStore } from '../store';
+import { Task } from '../type';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 
 export interface TaskItemProps {
   id: string;
 }
 
 export default function TaskItem({ id }: TaskItemProps) {
-  const task = useStore((state) => state.tasks.get(id));
+  const { data: task } = useSuspenseQuery(
+    queryOptions({
+      queryKey: ['tasks'],
+      queryFn: async (): Promise<Map<Task['id'], Task>> => {
+        const tasks = await window.electronAPI.getTasks();
+        return new Map(tasks.map((t) => [t.id, t]));
+      },
+      select: (tasks) => tasks.get(id),
+    }),
+  );
+
   const setCompleted = useStore((state) => state.setCompleted);
   const setText = useStore((state) => state.setText);
   const deleteTask = useStore((state) => state.deleteTask);

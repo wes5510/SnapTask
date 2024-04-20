@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { nanoid } from 'nanoid';
 import { Task } from './type';
 
 type State = {
