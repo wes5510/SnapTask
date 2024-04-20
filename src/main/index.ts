@@ -1,7 +1,8 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
-import { readAllPerson } from './personManager';
+import * as task from './task';
+import { AppDataSource } from './dataSource';
 
 function createWindow(): void {
   // Create the browser window.
@@ -36,7 +37,9 @@ function createWindow(): void {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  await AppDataSource.initialize();
+
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron');
 
@@ -49,7 +52,10 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'));
-  ipcMain.handle('read:/persons', readAllPerson);
+  ipcMain.handle('create:/tasks', (_e, data) => {
+    task.create(data);
+  });
+  ipcMain.handle('get:/tasks', task.get);
 
   createWindow();
 

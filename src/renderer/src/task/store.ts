@@ -4,7 +4,7 @@ import { Task } from './type';
 
 type State = {
   tasks: Map<Task['id'], Task>;
-  addNewTask: () => void;
+  addTask: (task: Task) => void;
   setCompleted: (params: {
     id: Task['id'];
     completed: Task['completed'];
@@ -63,19 +63,10 @@ export const useStore = create<State>()((set) => ({
       },
     ],
   ]),
-  addNewTask: () =>
-    set((state) => {
-      const newTask = {
-        id: nanoid(),
-        text: '',
-        tagIds: [],
-        completed: false,
-      };
-
-      return {
-        tasks: new Map([[newTask.id, newTask], ...state.tasks]),
-      };
-    }),
+  addTask: (task: Task) =>
+    set((state) => ({
+      tasks: new Map([[task.id, task], ...state.tasks]),
+    })),
   setCompleted: ({ id, completed }) =>
     set((state) => {
       const task = state.tasks.get(id);
