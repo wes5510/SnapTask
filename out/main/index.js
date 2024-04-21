@@ -45,6 +45,9 @@ const create = ({ id, text, completed }) => {
 const get = () => {
   return repo.find();
 };
+const updateText = ({ id, text }) => {
+  return repo.update({ id }, { text });
+};
 function createWindow() {
   const mainWindow = new electron.BrowserWindow({
     width: 900,
@@ -79,6 +82,7 @@ electron.app.whenReady().then(async () => {
     create(data);
   });
   electron.ipcMain.handle("get:/tasks", get);
+  electron.ipcMain.handle("update:/tasks/text", (_e, data) => updateText(data));
   createWindow();
   electron.app.on("activate", function() {
     if (electron.BrowserWindow.getAllWindows().length === 0)

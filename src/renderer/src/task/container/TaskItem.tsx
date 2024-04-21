@@ -1,4 +1,4 @@
-import { ChangeEventHandler, KeyboardEventHandler } from 'react';
+import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
 import Item from '../component/Item';
 import { useStore } from '../store';
 import { Task } from '../type';
@@ -19,9 +19,8 @@ export default function TaskItem({ id }: TaskItemProps) {
       select: (tasks) => tasks.get(id),
     }),
   );
-
+  const [text, setText] = useState(task?.text);
   const setCompleted = useStore((state) => state.setCompleted);
-  const setText = useStore((state) => state.setText);
   const deleteTask = useStore((state) => state.deleteTask);
   const prependTagId = useStore((state) => state.prependTagId);
 
@@ -30,7 +29,8 @@ export default function TaskItem({ id }: TaskItemProps) {
   };
 
   const handleChangeText: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setText({ id, text: e.target.value });
+    setText(e.target.value);
+    window.electronAPI.updateTaskText({ id, text: e.target.value });
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -46,7 +46,7 @@ export default function TaskItem({ id }: TaskItemProps) {
   return task ? (
     <Item
       id={id}
-      text={task.text}
+      text={text}
       checked={task.completed}
       onChangeCheck={handleChangeCheck}
       onChangeText={handleChangeText}

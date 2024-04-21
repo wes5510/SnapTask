@@ -56,6 +56,7 @@ app.whenReady().then(async () => {
     task.create(data);
   });
   ipcMain.handle('get:/tasks', task.get);
+  ipcMain.handle('update:/tasks/text', (_e, data) => task.updateText(data));
 
   createWindow();
 

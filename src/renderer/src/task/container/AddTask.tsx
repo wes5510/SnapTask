@@ -1,9 +1,17 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../common/component/Button';
 import { nanoid } from 'nanoid';
-import { useStore } from '../store';
+import { Task } from '../type';
 
 export default function AddTask() {
-  const addTask = useStore((state) => state.addTask);
+  const queryClient = useQueryClient();
+
+  const addTask = useMutation({
+    mutationFn: (newTask: Task) => window.electronAPI.addTask(newTask),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    },
+  });
 
   const handleClick = () => {
     const newTask = {
@@ -13,12 +21,7 @@ export default function AddTask() {
       completed: false,
     };
 
-    addTask(newTask);
-    window.electronAPI.addTask({
-      id: newTask.id,
-      text: newTask.text,
-      completed: newTask.completed,
-    });
+    addTask.mutate(newTask);
   };
 
   return (

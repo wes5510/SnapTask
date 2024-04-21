@@ -10,3 +10,7 @@ export const create = ({ id, text, completed }: Task) => {
 export const get = () => {
   return repo.find();
 };
+
+export const updateText = ({ id, text }: Pick<Task, 'id' | 'text'>) => {
+  return repo.update({ id }, { text });
+};
