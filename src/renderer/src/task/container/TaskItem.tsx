@@ -22,7 +22,6 @@ export default function TaskItem({ id }: TaskItemProps) {
   const [text, setText] = useState(task?.text);
   const setCompleted = useStore((state) => state.setCompleted);
   const deleteTask = useStore((state) => state.deleteTask);
-  const prependTagId = useStore((state) => state.prependTagId);
 
   const handleChangeCheck = (checked: boolean | string) => {
     setCompleted({ id, completed: !!checked });
@@ -39,19 +38,13 @@ export default function TaskItem({ id }: TaskItemProps) {
     }
   };
 
-  const handleAddTag = (tagId: string) => {
-    prependTagId({ id, tagId });
-  };
-
   return task ? (
     <Item
-      id={id}
       text={text}
       checked={task.completed}
       onChangeCheck={handleChangeCheck}
       onChangeText={handleChangeText}
       onKeyDown={handleKeyDown}
-      onAddTag={handleAddTag}
     />
   ) : null;
 }
