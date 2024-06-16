@@ -31,22 +31,33 @@ __decorateClass([
 Task = __decorateClass([
   typeorm.Entity()
 ], Task);
-const AppDataSource = new typeorm.DataSource({
-  type: "better-sqlite3",
+let appDataSource = new typeorm.DataSource({
   database: "../../demo.db",
-  synchronize: true,
+  type: "better-sqlite3",
+  // synchronize: true,
   logging: true,
   entities: [Task]
 });
-const repo = AppDataSource.getRepository(Task);
+function updateDatabase(database) {
+  if (appDataSource) {
+    appDataSource.destroy();
+    appDataSource = new typeorm.DataSource({
+      database: database ?? "../../demo.db",
+      type: "better-sqlite3",
+      // synchronize: true,
+      logging: true,
+      entities: [Task]
+    });
+  }
+}
 const create = ({ id, text, completed }) => {
-  repo.save({ id, text, completed });
+  appDataSource.getRepository(Task).save({ id, text, completed });
 };
 const get = () => {
-  return repo.find();
+  return appDataSource.getRepository(Task).find();
 };
 const updateText = ({ id, text }) => {
-  return repo.update({ id }, { text });
+  return appDataSource.getRepository(Task).update({ id }, { text });
 };
 function createWindow() {
   const mainWindow = new electron.BrowserWindow({
@@ -72,7 +83,7 @@ function createWindow() {
   }
 }
 electron.app.whenReady().then(async () => {
-  await AppDataSource.initialize();
+  await appDataSource.initialize();
   utils.electronApp.setAppUserModelId("com.electron");
   electron.app.on("browser-window-created", (_, window) => {
     utils.optimizer.watchWindowShortcuts(window);
@@ -83,6 +94,10 @@ electron.app.whenReady().then(async () => {
   });
   electron.ipcMain.handle("get:/tasks", get);
   electron.ipcMain.handle("update:/tasks/text", (_e, data) => updateText(data));
+  electron.ipcMain.handle("get:/db", async (e, path2) => {
+    updateDatabase(path2);
+    await appDataSource.initialize();
+  });
   createWindow();
   electron.app.on("activate", function() {
     if (electron.BrowserWindow.getAllWindows().length === 0)

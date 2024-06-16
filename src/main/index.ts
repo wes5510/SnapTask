@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import * as task from './task';
-import { AppDataSource } from './dataSource';
+import { appDataSource, updateDatabase } from './dataSource';
 
 function createWindow(): void {
   // Create the browser window.
@@ -38,7 +38,7 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
-  await AppDataSource.initialize();
+  await appDataSource.initialize();
 
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron');
@@ -57,6 +57,10 @@ app.whenReady().then(async () => {
   });
   ipcMain.handle('get:/tasks', task.get);
   ipcMain.handle('update:/tasks/text', (_e, data) => task.updateText(data));
+  ipcMain.handle('get:/db', async (e, path: string) => {
+    updateDatabase(path);
+    await appDataSource.initialize();
+  });
 
   createWindow();
 

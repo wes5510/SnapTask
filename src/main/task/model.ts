@@ -1,16 +1,14 @@
 import { Task } from './entity';
-import { AppDataSource } from '../dataSource';
-
-const repo = AppDataSource.getRepository(Task);
+import { appDataSource } from '../dataSource';
 
 export const create = ({ id, text, completed }: Task) => {
-  repo.save({ id, text, completed });
+  appDataSource.getRepository(Task).save({ id, text, completed });
 };
 
 export const get = () => {
-  return repo.find();
+  return appDataSource.getRepository(Task).find();
 };
 
 export const updateText = ({ id, text }: Pick<Task, 'id' | 'text'>) => {
-  return repo.update({ id }, { text });
+  return appDataSource.getRepository(Task).update({ id }, { text });
 };
