@@ -10,13 +10,11 @@ function App() {
       <common.TooltipProvider>
         <div className="max-w-3xl mx-auto my-16 flex flex-col gap-6">
           <task.ListController>
-            <task.SearchInput />
             <div className="flex flex-row items-center justify-between">
               <task.AddTask />
-              <task.Filter />
+              <common.LoadFileButton />
             </div>
           </task.ListController>
-
           <task.List>
             <task.Tasks />
           </task.List>
